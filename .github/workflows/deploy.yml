@@ -10,22 +10,42 @@ permissions:
   pages: write
   id-token: write
 
+concurrency:
+  group: "pages"
+  cancel-in-progress: false
+
 jobs:
   build:
     runs-on: ubuntu-latest
     steps:
-      - uses: actions/checkout@v4
-      - uses: actions/setup-node@v4
+      - name: Checkout code
+        uses: actions/checkout@v4
+
+      - name: Setup Node.js
+        uses: actions/setup-node@v4
         with:
-          node-version: 18
-      - name: Install Dependencies
-        run: npm install
-      - name: Build
+          node-version: '18'
+          cache: 'npm'
+
+      - name: Install dependencies
+        run: |
+          npm ci
+          npm cache clean --force
+          npm install
+
+      - name: Build project
         run: npm run build
-      - name: Upload artifact
+        env:
+          CI: false
+
+      - name: List build output
+        run: ls -la dist/ || echo "dist directory not found"
+
+      - name: Upload Pages artifact
         uses: actions/upload-pages-artifact@v2
         with:
-          path: dist/
+          path: 'dist'
+
   deploy:
     needs: build
     runs-on: ubuntu-latest
