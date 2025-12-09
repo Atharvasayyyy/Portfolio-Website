@@ -56,5 +56,5 @@ import { defineConfig } from 'vite';
       port: 3000,
       open: true,
     },
-    base: '/',
+    base: '/Portfolio-Website/',
   });
