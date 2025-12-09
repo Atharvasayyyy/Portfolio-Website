@@ -35,7 +35,7 @@ export function Navigation() {
               <Code2 className="w-6 h-6 text-white" />
             </div>
             <span className="text-xl tracking-tight bg-gradient-to-r from-cyan-400 to-blue-500 bg-clip-text text-transparent">
-              AS
+              ATS
             </span>
           </a>
 
